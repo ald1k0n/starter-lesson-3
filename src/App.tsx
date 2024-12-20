@@ -1,35 +1,11 @@
-import { Input, Form, Button } from "antd";
-import useAuthorization from "./useAuthorization";
-
-export type User = {
-  email: string;
-  username: string;
-  password: string;
-};
+import { useLoginQuery } from "./redux/serivces";
 
 function App() {
-  const [form] = Form.useForm();
-  const { isLoading, login } = useAuthorization();
+  const { data, isLoading } = useLoginQuery();
 
-  return (
-    <Form form={form} onFinish={login} layout="vertical">
-      {/* <Form.Item name="username" label="username">
-        <Input />
-      </Form.Item> */}
-      <Form.Item name="email" label="email">
-        <Input />
-      </Form.Item>
-      <Form.Item name="password" label="password">
-        <Input />
-      </Form.Item>
+  if (isLoading) return <>Loading...</>;
 
-      <Button loading={isLoading} type="primary" htmlType="submit">
-        Submit
-      </Button>
-    </Form>
-  );
-
-  // return <>sdhfjdshf</>;
+  return <code>{JSON.stringify(data)}</code>;
 }
 
 export default App;

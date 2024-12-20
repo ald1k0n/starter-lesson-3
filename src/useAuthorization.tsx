@@ -8,7 +8,7 @@ const useAuthorization = () => {
       const data = await login(values);
       return data;
     },
-
+    mutationKey: ["login"],
     onSuccess: () => {},
     onError: () => {},
   });
