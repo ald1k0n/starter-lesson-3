@@ -1,32 +1,30 @@
-import { useState } from "react";
-import { PortalWrapper } from "./components/PortalWrapper";
-import { Button, Typography, Modal } from "antd";
+import { Input } from "antd";
+import { useForm } from "react-hook-form";
 
 function App() {
-  const [open, setOpen] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+    setValue,
+  } = useForm();
+
+  const handleFinish = (data) => {
+    console.log(data);
+  };
 
   return (
-    <>
-      <Button onClick={() => setOpen(true)}>Open</Button>
-      {open && (
-        <PortalWrapper>
-          <Typography.Title level={2}>I am a modal window</Typography.Title>
-          <Button onClick={() => setOpen(false)}>Close</Button>
-        </PortalWrapper>
+    <form onSubmit={handleSubmit(handleFinish)}>
+      <Input onChange={(e) => setValue("username", e.target.value)} />
+
+      {errors.username && (
+        <p style={{ color: "red" }}>{errors.username.message}</p>
       )}
-      {/* <Modal
-        visible={open}
-        onCancel={() => setOpen(false)}
-        title="I am a modal window"
-        footer={[
-          <Button key="close" onClick={() => setOpen(false)}>
-            Close
-          </Button>,
-        ]}
-      >
-        <Typography.Title level={2}>I am a modal window</Typography.Title>
-      </Modal> */}
-    </>
+      <input {...register("password")} />
+      <button disabled={!isValid} type="submit">
+        submit
+      </button>
+    </form>
   );
 }
 
