@@ -1,35 +1,33 @@
-import { Input, Form, Button } from "antd";
-import useAuthorization from "./useAuthorization";
-
-export type User = {
-  email: string;
-  username: string;
-  password: string;
-};
+import { useState } from "react";
+import { PortalWrapper } from "./components/PortalWrapper";
+import { Button, Typography, Modal } from "antd";
 
 function App() {
-  const [form] = Form.useForm();
-  const { isLoading, login } = useAuthorization();
+  const [open, setOpen] = useState(false);
 
   return (
-    <Form form={form} onFinish={login} layout="vertical">
-      {/* <Form.Item name="username" label="username">
-        <Input />
-      </Form.Item> */}
-      <Form.Item name="email" label="email">
-        <Input />
-      </Form.Item>
-      <Form.Item name="password" label="password">
-        <Input />
-      </Form.Item>
-
-      <Button loading={isLoading} type="primary" htmlType="submit">
-        Submit
-      </Button>
-    </Form>
+    <>
+      <Button onClick={() => setOpen(true)}>Open</Button>
+      {open && (
+        <PortalWrapper>
+          <Typography.Title level={2}>I am a modal window</Typography.Title>
+          <Button onClick={() => setOpen(false)}>Close</Button>
+        </PortalWrapper>
+      )}
+      {/* <Modal
+        visible={open}
+        onCancel={() => setOpen(false)}
+        title="I am a modal window"
+        footer={[
+          <Button key="close" onClick={() => setOpen(false)}>
+            Close
+          </Button>,
+        ]}
+      >
+        <Typography.Title level={2}>I am a modal window</Typography.Title>
+      </Modal> */}
+    </>
   );
-
-  // return <>sdhfjdshf</>;
 }
 
 export default App;
